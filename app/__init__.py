@@ -14,8 +14,12 @@ def create_app(config=None):
         app.config.update(config)
 
     # Initialize app with SQLAlchemy db and Migrate
+    db.init_app(app)
+    migrate.init_app(app, db)
 
-    # Register Blueprints 
+    # Register Blueprints
+    app.register_blueprint(boards_bp)
+    app.register_blueprint(cards_bp)
 
     CORS(app)
     return app
