@@ -26,4 +26,12 @@ def to_dict(self):
         "board_id": self.board_id
     }
 
+@classmethod
+def from_dict(cls, data):
+    return cls(
+        message=data.get("message"),
+        likes_count=data.get("likes_count", 0),
+        board_id=data.get("board_id")
+    )
+
     
