@@ -69,6 +69,7 @@ def get_card(card_id):
 def update_card(card_id):
     """
     Update a card by ID.
+    Requires: { "message": string } in request body
     """
     card = validate_model(Card, card_id)
     request_body = request.get_json()
@@ -87,6 +88,7 @@ def update_card(card_id):
 def like_card(card_id):
     """
     Increment a card's like count.
+    Like count has no upper limit.
     """
     card = validate_model(Card, card_id)
     card.likes_count += 1
@@ -96,7 +98,8 @@ def like_card(card_id):
 @bp.delete("/<card_id>/like")
 def unlike_card(card_id):
     """
-    Decrement a card's like count (minimum 0).
+    Decrement a card's like count.
+    Like count cannot go below 0.
     """
     card = validate_model(Card, card_id)
     card.likes_count = max(0, card.likes_count - 1)
