@@ -1,6 +1,7 @@
 from sqlalchemy.orm import Mapped, mapped_column, relationship
 from sqlalchemy import ForeignKey
 from ..db import db
+from .board import Board
 from typing import Optional
 
 class Card(db.Model):
@@ -11,7 +12,7 @@ class Card(db.Model):
     __tablename__ = "cards"  # Table name in the database
 
     id: Mapped[int] = mapped_column(primary_key=True, autoincrement=True)  # Primary key for each card, auto-incremented
-    message: Mapped[str] = mapped_column  # The content/message of the card (cannot be null)
+    message: Mapped[str] = mapped_column  # The content/message of the card 
     likes_count: Mapped[int] = mapped_column(default=0)  # Number of likes for the card (default is 0)
     board_id: Mapped[int] = mapped_column(ForeignKey("boards.id"), nullable=False)  # Foreign key referencing the 'boards' table (must be linked to a board)
 
