@@ -17,6 +17,13 @@ class Card(db.Model):
 
     board: Mapped["Board"] = relationship("Board", back_populates="cards")  # Relationship to the Board model (each card is linked to one board)
 
-    
+# Helper method to convert the card object into a dictionary for JSON responses.
+def to_dict(self):
+    card_dict = {
+        "card_id": self.id,
+        "message": self.message,
+        "likes_count": self.likes_count,
+        "board_id": self.board_id
+    }
 
     
