@@ -17,21 +17,34 @@ def create_board():
 @bp.get("")
 def get_boards():
     """
-    Get all boards.
+    Get all boards with optional filtering and sorting.
+    Query parameters:
+    - title: filter by title (case-insensitive partial match)
+    - sort_by: field to sort by (title, id, or other valid Board field)
+    - order: sort order (asc or desc, defaults to asc)
     """
     query = db.select(Board)
 
     title_param = request.args.get("title")
     if title_param:
         query = query.where(Board.title.ilike(f"%{title_param}%"))
-    
-    sort_param = request.args.get("sort")
-    if sort_param == "asc":
-        query = query.order_by(Board.title.asc())
-    elif sort_param == "desc":
-        query = query.order_by(Board.title.desc())
+
+    sort_by = request.args.get("sort_by", "id")
+    order = request.args.get("order", "asc") 
+
+    valid_sort_fields = {"title", "id"}
+    if sort_by not in valid_sort_fields:
+        abort(make_response({"message": f"Invalid sort_by field. Must be one of: {', '.join(valid_sort_fields)}"}, 400))
+
+    sort_column = {
+        "title": Board.title,
+        "id": Board.id
+    }[sort_by]
+
+    if order.lower() == "desc":
+        query = query.order_by(sort_column.desc())
     else:
-        query = query.order_by(Board.id)
+        query = query.order_by(sort_column.asc())
 
     boards = db.session.scalars(query).all()
 
