@@ -86,15 +86,5 @@ def get_board_cards(board_id):
         "cards": [card.to_dict() for card in board.cards]
     }
 
-@bp.post("/<board_id>/cards")
-def create_board_card(board_id):
-    """
-    Create a new card for a specific board.
-    """
-    board = validate_model(Board, board_id)
-    request_body = request.get_json()
-    
-    # Ensure the board_id in the request matches the validated board
-    request_body["board_id"] = board.id
-    
-    return create_model(Card, request_body)
+# need to add this endpoint if we have effectively the same one in card_routes.py?
+# @bp.post("/<board_id>/cards")
