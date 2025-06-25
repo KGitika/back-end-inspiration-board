@@ -55,3 +55,63 @@ def get_cards():
     cards = db.session.scalars(query).all()
 
     return make_response({"cards": [card.to_dict() for card in cards]}, 200)
+
+@bp.get("/<card_id>")
+def get_card(card_id):
+    """
+    Get a card by ID.
+    """
+    card = validate_model(Card, card_id)
+
+    return make_response({"card": card.to_dict()}, 200)
+
+@bp.put("/<card_id>")
+def update_card(card_id):
+    """
+    Update a card by ID.
+    """
+    card = validate_model(Card, card_id)
+    request_body = request.get_json()
+
+    if "message" in request_body:
+        if len(request_body["message"]) > 500:
+            abort(make_response({"message": "Message too long (max 500 characters)"}, 400))
+        card.message = request_body["message"]
+    else:
+        abort(make_response({"message": "Missing required field: message"}, 400))
+
+    db.session.commit()
+    return make_response({"card": card.to_dict()}, 200)
+
+@bp.post("/<card_id>/like")
+def like_card(card_id):
+    """
+    Increment a card's like count.
+    """
+    card = validate_model(Card, card_id)
+    card.likes_count += 1
+    db.session.commit()
+    return make_response({"card": card.to_dict()}, 200)
+
+@bp.delete("/<card_id>/like")
+def unlike_card(card_id):
+    """
+    Decrement a card's like count (minimum 0).
+    """
+    card = validate_model(Card, card_id)
+    card.likes_count = max(0, card.likes_count - 1)
+    db.session.commit()
+    return make_response({"card": card.to_dict()}, 200)
+
+@bp.delete("/<card_id>")
+def delete_card(card_id):
+    """
+    Delete a card by ID.
+    """
+    card = validate_model(Card, card_id)
+    
+    db.session.delete(card)
+    db.session.commit()
+
+    return make_response({"message": "Card deleted successfully"}, 204)
+
