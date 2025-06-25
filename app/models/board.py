@@ -10,8 +10,8 @@ class Board(db.Model):
     __tablename__ = "board"  # Table name in the database
 
     id: Mapped[int] = mapped_column(primary_key=True, autoincrement=True)
-    title: Mapped[str] = mapped_column(nullable=False)
-    owner: Mapped[str] = mapped_column(nullable=False)
+    title: Mapped[str] = mapped_column
+    owner: Mapped[str] = mapped_column
 
     cards: Mapped[List["Card"]] = relationship(back_populates="board")
 
