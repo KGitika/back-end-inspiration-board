@@ -4,11 +4,12 @@ from ..db import db
 from .board import Board
 from typing import Optional
 
+
 class Card(db.Model):
 
     # The Card model represents a card that belongs to a specific board.
     # Each card contains a message and a count of likes.
-    
+
     __tablename__ = "cards"  # Table name in the database
 
     id: Mapped[int] = mapped_column(primary_key=True, autoincrement=True)  # Primary key for each card, auto-incremented
