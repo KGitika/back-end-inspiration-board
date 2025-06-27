@@ -107,7 +107,7 @@ def get_board_cards(board_id):
     sort_column = {
         "message": Card.message,
         "likes_count": Card.likes_count,
-        "id": Card.card_id  # use `card_id` if that's your PK
+        "id": Card.card_id 
     }[sort_by]
 
     if order.lower() == "desc":
@@ -135,7 +135,7 @@ def create_card_for_board(board_id):
     new_card = Card(
         message=request_body["message"],
         board_id=board.id,
-        likes_count=0  # default initial value
+        likes_count=0
     )
 
     db.session.add(new_card)
