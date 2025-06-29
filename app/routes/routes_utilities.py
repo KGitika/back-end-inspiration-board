@@ -1,13 +1,15 @@
 from flask import abort, make_response
 from ..db import db
 
+
 def validate_model(cls, model_id):
     """Validate that a model exists in the database with the given ID."""
-    
+
     try:
         model_id = int(model_id)
     except ValueError:
-        invalid_response = {"message": f"The {cls.__name__} with ID {model_id} is invalid."}
+        invalid_response = {
+            "message": f"The {cls.__name__} with ID {model_id} is invalid."}
         abort(make_response(invalid_response, 400))
 
     # Query the database for the model with the given ID
@@ -16,10 +18,12 @@ def validate_model(cls, model_id):
 
     # If the model is not found, return a 404 error
     if not model:
-        invalid_response = {"message": f"The {cls.__name__} with ID {model_id} does not exist."}
+        invalid_response = {
+            "message": f"The {cls.__name__} with ID {model_id} does not exist."}
         abort(make_response(invalid_response, 404))
 
     return model
+
 
 def create_model(cls, model_data):
     """Create a new model instance from the provided data."""
@@ -28,7 +32,8 @@ def create_model(cls, model_data):
         "Board": ["title", "owner"],
         "Card": ["message", "board_id"]
     }
-    missing_fields = [field for field in required_fields if field not in model_data]
+    missing_fields = [
+        field for field in required_fields[cls.__name__] if field not in model_data]
     if missing_fields:
         invalid_response = {
             "message": f"Missing required fields: {', '.join(missing_fields)}"
