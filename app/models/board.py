@@ -7,7 +7,7 @@ if TYPE_CHECKING:
 
 
 class Board(db.Model):
-    __tablename__ = "board"  # Table name in the database
+    __tablename__ = "boards"  # Table name in the database
 
     id: Mapped[int] = mapped_column(primary_key=True, autoincrement=True)
     title: Mapped[str] = mapped_column()
