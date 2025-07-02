@@ -35,7 +35,7 @@ def update_like_count(card_id):
     Increment or decrement a card's like count.
     Use ?action=like or ?action=unlike in the query string.
     """
-    print("CARD ", card_id)
+    #print("CARD ", card_id)
     card = validate_model(Card, card_id)
     action = "like"  # request.args.get("action")
 
