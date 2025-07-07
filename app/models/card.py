@@ -2,8 +2,6 @@ from sqlalchemy.orm import Mapped, mapped_column, relationship
 from sqlalchemy import ForeignKey
 from ..db import db
 from .board import Board
-from typing import Optional
-
 
 class Card(db.Model):
 

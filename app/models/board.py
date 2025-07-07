@@ -5,7 +5,6 @@ from typing import List, TYPE_CHECKING
 if TYPE_CHECKING:
     from .card import Card
 
-
 class Board(db.Model):
     __tablename__ = "boards"  # Table name in the database
 
@@ -29,5 +28,4 @@ class Board(db.Model):
 
     @classmethod
     def from_dict(cls, board_data):
-        # return Board(title=board_data["title"], owner=board_data["owner"])
         return cls(title=board_data["title"], owner=board_data["owner"])
