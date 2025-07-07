@@ -1,8 +1,8 @@
-"""Create boards and cards tables
+"""empty message
 
-Revision ID: f12a18707837
-Revises: 
-Create Date: 2025-06-29 12:58:04.227684
+Revision ID: 6874beebbeba
+Revises: f12a18707837
+Create Date: 2025-07-07 20:24:04.983534
 
 """
 from alembic import op
@@ -10,8 +10,8 @@ import sqlalchemy as sa
 
 
 # revision identifiers, used by Alembic.
-revision = 'f12a18707837'
-down_revision = 'a5f5ac8ee83f'
+revision = '6874beebbeba'
+down_revision = 'f12a18707837'
 branch_labels = None
 depends_on = None
 
